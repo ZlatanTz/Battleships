@@ -44,11 +44,38 @@ export default class Gameboard{
             }
         }
     }
+    recieveAttack(x, y){
+        if (x >= this.size || y >= this.size || x < 0 || y < 0){
+            throw new Error('Coords outside board')
+        }
+    
+        if(this.board[x][y] === null){
+            this.board[x][y] = 'miss'
+            return {x, y, result: 'miss'}
+        }
+    
+        let aimedShip = this.board[x][y]
+        aimedShip.hit()
+        console.log(`Ship hit at ${x}, ${y}. Times hit: ${aimedShip.timesHit}`);
+        this.board[x][y] = 'x'
+        return [x, y]
+    }
+    everyShipSunk() {
+        for (let row of this.board) {
+            for (let cell of row) {
+                if (cell && typeof cell.isSunk === "function" && !cell.isSunk()) {
+                    return false;   
+                }
+            }
+        }
+        return true;
+    }   
+    
 
     printBoard() {
         console.log(
             this.board.map(row =>
-                row.map(cell => cell?.type?.charAt(0) || '.').join(' ')
+                row.map(cell => cell?.name?.charAt(0) || cell?.charAt(0) || '.').join(' ')
             ).join('\n')
         );
     }

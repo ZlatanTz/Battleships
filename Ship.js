@@ -12,7 +12,9 @@ export default class Ship {
     hit() {
         if (this.timesHit < this.length) {
             this.timesHit++;
+            console.log(`Hit! Times hit: ${this.timesHit}`);
         }
+        
     }
 
     isSunk() {

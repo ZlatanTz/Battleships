@@ -6,6 +6,6 @@ const mainBoard = new Gameboard();
 const shipDestroyer = new Destroyer();
 
 mainBoard.placeShip(2, 2, 'x', shipDestroyer)
-
+mainBoard.recieveAttack(2, 2)
 
 mainBoard.printBoard()

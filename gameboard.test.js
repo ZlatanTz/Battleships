@@ -44,5 +44,46 @@ describe('Gameboard class', () => {
     }
         
     })
+
+    test('hit logic', () => {
+        let carrier = new Carrier();
+        gameboard.placeShip(1, 1, 'y', carrier)
+        gameboard.recieveAttack(1, 1)
+        expect(gameboard.board[1][1]).toBe('x')
+        gameboard.recieveAttack(2, 2)
+        expect(gameboard.board[2][2]).toBe('miss')
+
+        gameboard.recieveAttack(2, 1)
+        gameboard.recieveAttack(3, 1)
+        gameboard.recieveAttack(4, 1)
+        gameboard.recieveAttack(5, 1)
+
+        gameboard.printBoard()
+
+        expect(carrier.isSunk()).toBe(true)
+
+
+    })
+    test('all ships sunk', () => {
+        let carrier = new Carrier()
+        let battleship = new Battleship()
+        
+        gameboard.placeShip(1, 1, 'y', carrier)
+        gameboard.recieveAttack(1, 1)
+        gameboard.recieveAttack(2, 1)
+        gameboard.recieveAttack(3, 1)
+        gameboard.recieveAttack(4, 1)
+        gameboard.recieveAttack(5, 1)
+
+        gameboard.placeShip(3, 3, 'y', battleship)
+        gameboard.recieveAttack(3, 3)
+        gameboard.recieveAttack(4, 3)
+        gameboard.recieveAttack(5, 3)
+        gameboard.recieveAttack(6, 3)
+        expect(gameboard.everyShipSunk()).toBe(true)
+
+
+    })
+
 })
 
