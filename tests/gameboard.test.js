@@ -1,5 +1,5 @@
-import Gameboard from './Gameboard.js'
-import Ship, { Battleship, Carrier, Cruiser, Destroyer} from './Ship.js'
+import Gameboard from '../scripts/Gameboard.js'
+import Ship, { Battleship, Carrier, Cruiser, Destroyer} from '../scripts/Ship.js'
 
 
 describe('Gameboard class', () => {
@@ -49,7 +49,7 @@ describe('Gameboard class', () => {
         let carrier = new Carrier();
         gameboard.placeShip(1, 1, 'y', carrier)
         gameboard.recieveAttack(1, 1)
-        expect(gameboard.board[1][1]).toBe('x')
+        expect(gameboard.board[1][1].hit).toBe(true)
         gameboard.recieveAttack(2, 2)
         expect(gameboard.board[2][2]).toBe('miss')
 

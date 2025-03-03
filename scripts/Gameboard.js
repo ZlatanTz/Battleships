@@ -1,5 +1,4 @@
-import Ship from './Ship.js'
-import { Destroyer } from './Ship.js';
+
 export default class Gameboard{
     constructor(){
         this.size = 10;
@@ -44,22 +43,25 @@ export default class Gameboard{
             }
         }
     }
-    recieveAttack(x, y){
-        if (x >= this.size || y >= this.size || x < 0 || y < 0){
-            throw new Error('Coords outside board')
+    recieveAttack(x, y) {
+        if (x >= this.size || y >= this.size || x < 0 || y < 0) {
+            throw new Error('Coords outside board');
         }
     
-        if(this.board[x][y] === null){
-            this.board[x][y] = 'miss'
-            return {x, y, result: 'miss'}
+        if (this.board[x][y] === null) {
+            this.board[x][y] = 'miss';
+            return { x, y, result: 'miss' };
         }
     
-        let aimedShip = this.board[x][y]
-        aimedShip.hit()
-        console.log(`Ship hit at ${x}, ${y}. Times hit: ${aimedShip.timesHit}`);
-        this.board[x][y] = 'x'
-        return [x, y]
+        let aimedShip = this.board[x][y];
+
+        aimedShip.hit();
+
+        this.board[x][y] = { ship: aimedShip, hit: true };
+    
+        return { x, y, result: 'hit', ship: aimedShip };
     }
+
     everyShipSunk() {
         for (let row of this.board) {
             for (let cell of row) {
@@ -75,10 +77,17 @@ export default class Gameboard{
     printBoard() {
         console.log(
             this.board.map(row =>
-                row.map(cell => cell?.name?.charAt(0) || cell?.charAt(0) || '.').join(' ')
+                row.map(cell => {
+                    if (cell?.result === 'miss') return 'o'; // Missed shot
+                    if (cell && typeof cell === 'object') {
+                        return cell?.hit === true ? 'x' : cell?.name?.charAt(0); 
+                    }
+                    return '.'; // Empty space
+                }).join(' ')
             ).join('\n')
         );
     }
+    
 
 }
 

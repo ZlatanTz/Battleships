@@ -1,5 +1,5 @@
-import Ship from './Ship.js'
-import {Destroyer} from './Ship.js';  
+
+import {Destroyer} from '../scripts/Ship.js';  
 
 test('sunk logic', () => {
 
